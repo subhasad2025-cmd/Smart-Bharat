@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bharat — AI Powered Civic Companion</title>
+    <meta name="description"
+        content="Access Indian government services, file complaints, track applications and chat with an AI assistant — all in one place.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= NAVBAR ============================= -->
+    <nav class="navbar navbar-expand-lg sb-navbar">
+        <div class="container-fluid px-3 px-lg-5">
+            <a class="sb-brand" href="index.html"><span class="chakra-dot"></span>Smart Bharat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMain">
+                <ul class="navbar-nav ms-lg-4 me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link" data-page="index.html" data-i18n="nav_home"
+                            href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="services.html" data-i18n="nav_services"
+                            href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="chat.html" data-i18n="nav_chat"
+                            href="chat.html">AI Assistant</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="complaint.html" data-i18n="nav_complaint"
+                            href="complaint.html">Report Issue</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="tracker.html" data-i18n="nav_tracker"
+                            href="tracker.html">Track Complaint</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="documents.html" data-i18n="nav_documents"
+                            href="documents.html">Documents</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                    <div class="btn-group" role="group" aria-label="Language switcher">
+                        <button class="btn-lang" data-lang="en">EN</button>
+                        <button class="btn-lang" data-lang="hi">हिं</button>
+                        <button class="btn-lang" data-lang="ta">தமிழ்</button>
+                    </div>
+                    <span id="navAuthSlot"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================= HERO ============================= -->
+    <header class="hero">
+        <div class="container">
+            <div class="row align-items-center content g-5">
+                <div class="col-lg-7">
+                    <span class="eyebrow" data-i18n="hero_eyebrow">Digital India · Civic Companion</span>
+                    <h1 class="mt-3" data-i18n="hero_title">Government services made simple for every citizen</h1>
+                    <p class="lead mt-3" data-i18n="hero_sub">Find services, file complaints, track applications and
+                        chat with an AI assistant — all in one place, in the language you're comfortable with.</p>
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a href="services.html" class="btn btn-cta" data-i18n="hero_cta_primary">Explore Services</a>
+                        <a href="chat.html" class="btn btn-outline-light-custom" data-i18n="hero_cta_secondary">Ask the
+                            AI Assistant</a>
+                    </div>
+                    <div class="stat-strip">
+                        <div class="stat"><b>8+</b><span>Core Services</span></div>
+                        <div class="stat"><b>3</b><span>Languages Supported</span></div>
+                        <div class="stat"><b>24/7</b><span>AI Assistance</span></div>
+                        <div class="stat"><b>100%</b><span>Free to Use</span></div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="ai-hero-card">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="ai-avatar">🤖</div>
+                            <div>
+                                <div style="color:#fff;font-weight:700;font-size:.95rem;">Smart Bharat Assistant</div>
+                                <div style="color:rgba(255,255,255,.6);font-size:.78rem;">● Online now</div>
+                            </div>
+                        </div>
+                        <div class="bubble" data-i18n="hero_ai_greeting">Namaste! Ask me how to apply for a Passport,
+                            PAN, or Aadhaar.</div>
+                        <div class="d-flex gap-2 mt-3 flex-wrap">
+                            <span class="quick-chip" onclick="location.href='chat.html'">How to apply for
+                                Aadhaar?</span>
+                            <span class="quick-chip" onclick="location.href='chat.html'">PAN card fees?</span>
+                        </div>
+                        <div class="mt-3 d-flex align-items-center gap-2" style="opacity:.7;">
+                            <div class="typing-dots"><span></span><span></span><span></span></div>
+                            <small style="color:rgba(255,255,255,.6);">assistant is typing…</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================= QUICK ACTIONS ============================= -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="eyebrow">What would you like to do?</span>
+                <h2 class="section-title mt-2">Everything a citizen needs, in one dashboard</h2>
+                <div class="tricolor-rule mx-auto"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <a href="services.html" class="card-sb d-block text-decoration-none">
+                        <div class="card-icon">📋</div>
+                        <h5>Government Services</h5>
+                        <p class="muted">Aadhaar, PAN, Passport, DL, Voter ID and more — eligibility to application in
+                            one view.</p>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <a href="complaint.html" class="card-sb d-block text-decoration-none">
+                        <div class="card-icon">📣</div>
+                        <h5>Report a Civic Issue</h5>
+                        <p class="muted">Raise a complaint with photos and location — routed to the right department
+                            instantly.</p>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <a href="tracker.html" class="card-sb d-block text-decoration-none">
+                        <div class="card-icon">🔍</div>
+                        <h5>Track Your Complaint</h5>
+                        <p class="muted">Enter your Complaint ID to see live status — pending, in progress, or resolved.
+                        </p>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <a href="chat.html" class="card-sb d-block text-decoration-none">
+                        <div class="card-icon">🤖</div>
+                        <h5>AI Assistant</h5>
+                        <p class="muted">Ask anything about government services and get instant, plain-language
+                            guidance.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= AI RECOMMENDATION TEASER ============================= -->
+    <section class="section bg-paper-dim">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="eyebrow">Personalised for you</span>
+                    <h2 class="section-title mt-2">Discover schemes made for your profile</h2>
+                    <div class="tricolor-rule"></div>
+                    <p class="section-sub">Tell us who you are — student, farmer, senior citizen, woman, entrepreneur,
+                        or job-seeker — and our AI recommendation engine will surface schemes you're likely eligible
+                        for.</p>
+                    <a href="documents.html#recommend" class="btn btn-cta">Get My Recommendations</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="card-sb text-center py-4">
+                                <div style="font-size:1.8rem;">🎓</div><small class="fw-semibold">Student</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-sb text-center py-4">
+                                <div style="font-size:1.8rem;">🌾</div><small class="fw-semibold">Farmer</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-sb text-center py-4">
+                                <div style="font-size:1.8rem;">👵</div><small class="fw-semibold">Senior Citizen</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card-sb text-center py-4">
+                                <div style="font-size:1.8rem;">💼</div><small class="fw-semibold">Entrepreneur</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= EMERGENCY CONTACTS ============================= -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="eyebrow">Save these numbers</span>
+                <h2 class="section-title mt-2">Emergency Contacts</h2>
+                <div class="tricolor-rule mx-auto"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="emg-card" style="background:linear-gradient(135deg,#D64545,#8f1f1f);">
+                        <div>🚓 Police</div>
+                        <div class="num">100</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="emg-card" style="background:linear-gradient(135deg,#E27D0E,#8a4c05);">
+                        <div>🚑 Ambulance</div>
+                        <div class="num">108</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="emg-card" style="background:linear-gradient(135deg,#0B3D91,#082a66);">
+                        <div>🔥 Fire Services</div>
+                        <div class="num">101</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="emg-card" style="background:linear-gradient(135deg,#0E6B05,#0a4a03);">
+                        <div>👩 Women's Helpline</div>
+                        <div class="num">1091</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= FOOTER ============================= -->
+    <footer class="sb-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <a class="sb-brand mb-3 d-inline-flex" href="index.html"><span class="chakra-dot"></span>Smart
+                        Bharat</a>
+                    <p class="small" data-i18n="footer_tagline">An AI-powered civic companion helping every Indian
+                        citizen access government services with ease.</p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="social-dot">🌐</a>
+                        <a href="#" class="social-dot">📘</a>
+                        <a href="#" class="social-dot">🐦</a>
+                        <a href="#" class="social-dot">📸</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6>Explore</h6>
+                    <a href="index.html">Home</a>
+                    <a href="services.html">Services</a>
+                    <a href="chat.html">AI Assistant</a>
+                    <a href="documents.html">Document Assistant</a>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6>Civic Tools</h6>
+                    <a href="complaint.html">Report Issue</a>
+                    <a href="tracker.html">Track Complaint</a>
+                    <a href="login.html">Login</a>
+                    <a href="signup.html">Sign Up</a>
+                </div>
+                <div class="col-lg-4">
+                    <h6>Official Portals</h6>
+                    <a href="https://www.india.gov.in" target="_blank" rel="noopener">India.gov.in — National Portal</a>
+                    <a href="https://uidai.gov.in" target="_blank" rel="noopener">UIDAI — Aadhaar</a>
+                    <a href="https://www.mygov.in" target="_blank" rel="noopener">MyGov.in</a>
+                </div>
+            </div>
+            <div class="foot-bottom">
+                <span>© 2026 Smart Bharat. Built for DEVENGERS PromptWars Hackathon.</span>
+                <span>Not an official Government of India website — a civic-tech demo.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

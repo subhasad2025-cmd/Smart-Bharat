@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant — Smart Bharat</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: var(--paper);
+        }
+
+        .chat-page-wrap {
+            padding: 26px 16px 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================= NAVBAR ============================= -->
+    <nav class="navbar navbar-expand-lg sb-navbar">
+        <div class="container-fluid px-3 px-lg-5">
+            <a class="sb-brand" href="index.html"><span class="chakra-dot"></span>Smart Bharat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMain">
+                <ul class="navbar-nav ms-lg-4 me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link" data-page="index.html" data-i18n="nav_home"
+                            href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="services.html" data-i18n="nav_services"
+                            href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="chat.html" data-i18n="nav_chat"
+                            href="chat.html">AI Assistant</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="complaint.html" data-i18n="nav_complaint"
+                            href="complaint.html">Report Issue</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="tracker.html" data-i18n="nav_tracker"
+                            href="tracker.html">Track Complaint</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="documents.html" data-i18n="nav_documents"
+                            href="documents.html">Documents</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                    <div class="btn-group" role="group" aria-label="Language switcher">
+                        <button class="btn-lang" data-lang="en">EN</button>
+                        <button class="btn-lang" data-lang="hi">हिं</button>
+                        <button class="btn-lang" data-lang="ta">தமிழ்</button>
+                    </div>
+                    <span id="navAuthSlot"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="chat-page-wrap">
+        <div class="container">
+            <!-- Gemini API key bar -->
+            <div class="card-sb mb-3 py-3">
+                <div class="row align-items-center g-2">
+                    <div class="col-md-7">
+                        <label class="small fw-semibold mb-1">Google Gemini API Key <span
+                                class="text-muted fw-normal">(stored only in your browser)</span></label>
+                        <input type="password" id="geminiKeyInput" class="form-control form-control-sb"
+                            placeholder="Paste your Gemini API key to enable full AI answers…">
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-cta w-100 mt-md-4" id="saveKeyBtn">Save Key</button>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-outline-secondary w-100 mt-md-4" href="https://aistudio.google.com/app/apikey"
+                            target="_blank" rel="noopener">Get a key</a>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">No key yet? The assistant will still answer using built-in
+                    guidance for common services.</small>
+            </div>
+
+            <div class="chat-shell">
+                <div class="chat-header">
+                    <div class="ai-avatar" style="width:40px;height:40px;">🤖</div>
+                    <div>
+                        <div class="fw-bold">Smart Bharat AI Assistant</div>
+                        <small style="opacity:.8;">Powered by Google Gemini · Civic services guidance</small>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg-row bot">
+                        <div class="msg-avatar bot">🤖</div>
+                        <div class="msg-bubble" data-i18n="hero_ai_greeting">Namaste! Ask me how to apply for a
+                            Passport, PAN, or Aadhaar.</div>
+                    </div>
+                </div>
+                <div class="px-3 pt-2 d-flex gap-2 flex-wrap">
+                    <span class="quick-chip" data-q="How do I apply for a new Aadhaar card?">Apply for Aadhaar</span>
+                    <span class="quick-chip" data-q="What documents are required for a Passport?">Passport
+                        documents</span>
+                    <span class="quick-chip" data-q="How long does a PAN card take to arrive?">PAN processing
+                        time</span>
+                    <span class="quick-chip" data-q="How do I file a civic complaint?">File a complaint</span>
+                </div>
+                <form class="chat-input-bar" id="chatForm">
+                    <input type="text" id="chatInput" class="form-control form-control-sb"
+                        placeholder="Type your question about any government service…" autocomplete="off" required>
+                    <button type="submit" class="btn btn-cta">Send ➤</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const chatMessages = document.getElementById("chatMessages");
+        const chatForm = document.getElementById("chatForm");
+        const chatInput = document.getElementById("chatInput");
+        const geminiKeyInput = document.getElementById("geminiKeyInput");
+        let chatHistory = []; // Gemini-formatted { role, parts } history for context
+
+        document.addEventListener("DOMContentLoaded", () => {
+            geminiKeyInput.value = getGeminiKey();
+        });
+
+        document.getElementById("saveKeyBtn").addEventListener("click", () => {
+            setGeminiKey(geminiKeyInput.value);
+            showToast(geminiKeyInput.value ? "Gemini API key saved locally." : "Key cleared.", "success");
+        });
+
+        function appendMessage(text, sender) {
+            const row = document.createElement("div");
+            row.className = `msg-row ${sender}`;
+            row.innerHTML = `
+      <div class="msg-avatar ${sender}">${sender === "bot" ? "🤖" : "🙂"}</div>
+      <div class="msg-bubble">${text.replace(/\n/g, "<br>")}</div>`;
+            chatMessages.appendChild(row);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function appendTyping() {
+            const row = document.createElement("div");
+            row.className = "msg-row bot";
+            row.id = "typingRow";
+            row.innerHTML = `<div class="msg-avatar bot">🤖</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+            chatMessages.appendChild(row);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function removeTyping() {
+            document.getElementById("typingRow")?.remove();
+        }
+
+        async function handleUserMessage(text) {
+            appendMessage(text, "user");
+            appendTyping();
+            try {
+                let reply;
+                if (getGeminiKey()) {
+                    reply = await askGemini(text, chatHistory);
+                    chatHistory.push({ role: "user", parts: [{ text }] });
+                    chatHistory.push({ role: "model", parts: [{ text: reply }] });
+                    // Keep history from growing unbounded
+                    if (chatHistory.length > 12) chatHistory = chatHistory.slice(-12);
+                } else {
+                    await new Promise((r) => setTimeout(r, 500)); // small delay to feel natural
+                    reply = localAssistantFallback(text);
+                }
+                removeTyping();
+                appendMessage(reply, "bot");
+            } catch (err) {
+                removeTyping();
+                if (err.message === "NO_KEY") {
+                    appendMessage(localAssistantFallback(text), "bot");
+                } else {
+                    appendMessage(`⚠️ I couldn't reach Gemini right now (${err.message}). Here's what I know locally:\n\n${localAssistantFallback(text)}`, "bot");
+                }
+            }
+        }
+
+        chatForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            chatInput.value = "";
+            handleUserMessage(text);
+        });
+
+        document.querySelectorAll(".quick-chip").forEach((chip) => {
+            chip.addEventListener("click", () => handleUserMessage(chip.dataset.q));
+        });
+    </script>
+</body>
+
+</html>

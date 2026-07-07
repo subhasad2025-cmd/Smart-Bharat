@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint — Smart Bharat</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= NAVBAR ============================= -->
+    <nav class="navbar navbar-expand-lg sb-navbar">
+        <div class="container-fluid px-3 px-lg-5">
+            <a class="sb-brand" href="index.html"><span class="chakra-dot"></span>Smart Bharat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMain">
+                <ul class="navbar-nav ms-lg-4 me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link" data-page="index.html" data-i18n="nav_home"
+                            href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="services.html" data-i18n="nav_services"
+                            href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="chat.html" data-i18n="nav_chat"
+                            href="chat.html">AI Assistant</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="complaint.html" data-i18n="nav_complaint"
+                            href="complaint.html">Report Issue</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="tracker.html" data-i18n="nav_tracker"
+                            href="tracker.html">Track Complaint</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="documents.html" data-i18n="nav_documents"
+                            href="documents.html">Documents</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                    <div class="btn-group" role="group" aria-label="Language switcher">
+                        <button class="btn-lang" data-lang="en">EN</button>
+                        <button class="btn-lang" data-lang="hi">हिं</button>
+                        <button class="btn-lang" data-lang="ta">தமிழ்</button>
+                    </div>
+                    <span id="navAuthSlot"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" style="padding:64px 0 48px;">
+        <div class="container content">
+            <span class="eyebrow">Stay Informed</span>
+            <h1 class="mt-2" style="font-size:clamp(1.9rem,3.6vw,2.8rem);">Track Your Complaint</h1>
+            <p class="lead">Enter the Complaint ID you received after filing to see its current status and timeline.</p>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="card-sb mb-4">
+                        <div class="d-flex gap-2">
+                            <input type="text" id="trackInput" class="form-control form-control-sb"
+                                placeholder="Enter Complaint ID e.g. SB-2026-1234">
+                            <button class="btn btn-cta" id="trackBtn" style="min-width:120px;">Track</button>
+                        </div>
+                        <small class="text-muted d-block mt-2">Tip: don't have an ID yet? <a href="complaint.html">File
+                                a complaint first</a>.</small>
+                    </div>
+
+                    <div id="trackResult"></div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-7">
+                    <h6 class="fw-bold mb-3">Your Recent Complaints (this device)</h6>
+                    <div id="recentComplaints" class="d-flex flex-column gap-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="sb-footer">
+        <div class="container">
+            <div class="foot-bottom" style="border-top:none; margin-top:0;">
+                <span>© 2026 Smart Bharat. Built for DEVENGERS PromptWars Hackathon.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function statusClass(status) {
+            if (status === "Resolved") return "status-resolved";
+            if (status === "In Progress") return "status-progress";
+            return "status-pending";
+        }
+
+        function renderComplaintCard(c, big = false) {
+            return `
+      <div class="card-sb ${big ? "" : "py-3"}">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <div class="fw-bold">${c.id}</div>
+            <small class="text-muted">${c.category} · ${c.location}</small>
+          </div>
+          <span class="status-pill ${statusClass(c.status)}">${c.status}</span>
+        </div>
+        ${big ? `<p class="muted mt-3 mb-2">${c.description}</p>` : ""}
+        ${big && c.image ? `<img src="${c.image}" class="rounded-3 mt-2" style="max-height:220px; border:1px solid var(--line);">` : ""}
+        ${big ? `
+        <h6 class="fw-bold mt-3">Timeline</h6>
+        <ul class="step-list">
+          ${c.timeline.map((t, i) => `<li><span class="step-num">${i + 1}</span><span>${t.label} — <small class="text-muted">${new Date(t.date).toLocaleString()}</small></span></li>`).join("")}
+        </ul>` : ""}
+      </div>`;
+        }
+
+        function doTrack() {
+            const id = document.getElementById("trackInput").value.trim();
+            const resultEl = document.getElementById("trackResult");
+            if (!id) { showToast("Please enter a Complaint ID.", "error"); return; }
+            const complaint = findComplaint(id);
+            if (!complaint) {
+                resultEl.innerHTML = `<div class="card-sb text-center py-4">
+        <div style="font-size:2rem;">🔎</div>
+        <h6 class="fw-bold mt-2">No complaint found for "${id}"</h6>
+        <p class="muted">Double-check the ID or file a new complaint.</p>
+      </div>`;
+                return;
+            }
+            resultEl.innerHTML = renderComplaintCard(complaint, true);
+        }
+
+        document.getElementById("trackBtn").addEventListener("click", doTrack);
+        document.getElementById("trackInput").addEventListener("keydown", (e) => { if (e.key === "Enter") doTrack(); });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const recent = getComplaints().slice(0, 5);
+            const container = document.getElementById("recentComplaints");
+            if (recent.length === 0) {
+                container.innerHTML = `<p class="text-muted">No complaints filed from this browser yet.</p>`;
+            } else {
+                container.innerHTML = recent.map((c) => renderComplaintCard(c, false)).join("");
+            }
+            // Auto-fill from query string: tracker.html?id=SB-2026-1234
+            const params = new URLSearchParams(location.search);
+            if (params.get("id")) {
+                document.getElementById("trackInput").value = params.get("id");
+                doTrack();
+            }
+        });
+    </script>
+</body>
+
+</html>

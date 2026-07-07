@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — Smart Bharat</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="padding-top:0;">
+
+    <div class="auth-shell">
+        <!-- Visual / brand side -->
+        <div class="auth-visual">
+            <a class="sb-brand mb-4 d-inline-flex" href="index.html"><span class="chakra-dot"></span>Smart Bharat</a>
+            <h2 style="color:#fff; font-size:2rem; max-width:420px;">Join thousands of citizens simplifying government
+                access.</h2>
+            <p style="color:rgba(255,255,255,.75); max-width:420px;">Create a free account to save your details, track
+                complaints, and get AI-powered scheme recommendations tailored to you.</p>
+            <ul class="mt-4" style="color:rgba(255,255,255,.8); padding-left:20px; font-size:.92rem;">
+                <li class="mb-2">Track every complaint you file</li>
+                <li class="mb-2">Get personalised scheme alerts</li>
+                <li class="mb-2">Chat history with the AI Assistant</li>
+            </ul>
+        </div>
+
+        <!-- Form side -->
+        <div class="auth-form-col">
+            <div class="auth-card">
+                <div class="d-lg-none mb-4 text-center">
+                    <a class="sb-brand justify-content-center" href="index.html"
+                        style="color:var(--navy-900) !important;"><span class="chakra-dot"></span>Smart Bharat</a>
+                </div>
+                <h3 class="fw-bold">Create your account</h3>
+                <p class="text-muted mb-4">It only takes a minute.</p>
+
+                <form id="signupForm" class="form-sb" novalidate>
+                    <div class="mb-3">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control form-control-sb" id="suName" placeholder="Your full name"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control form-control-sb" id="suEmail"
+                            placeholder="you@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Mobile Number</label>
+                        <input type="tel" class="form-control form-control-sb" id="suMobile"
+                            placeholder="10-digit mobile number" maxlength="10" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" class="form-control form-control-sb" id="suPassword"
+                            placeholder="Minimum 6 characters" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control form-control-sb" id="suConfirmPassword"
+                            placeholder="Re-enter your password" required>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                        <label class="form-check-label small" for="agreeTerms">I agree to the Terms of Service and
+                            Privacy Policy.</label>
+                    </div>
+                    <button type="submit" class="btn btn-cta w-100 mb-3">Register</button>
+                </form>
+
+                <p class="text-center small text-muted mt-3">
+                    Already have an account? <a href="login.html" class="fw-semibold" style="color:var(--navy-900);">Log
+                        in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (getSession()) window.location.href = "index.html";
+        });
+
+        document.getElementById("signupForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById("suName").value.trim();
+            const email = document.getElementById("suEmail").value.trim();
+            const mobile = document.getElementById("suMobile").value.trim();
+            const password = document.getElementById("suPassword").value;
+            const confirmPassword = document.getElementById("suConfirmPassword").value;
+            const agreed = document.getElementById("agreeTerms").checked;
+
+            if (!agreed) { showToast("Please accept the Terms of Service to continue.", "error"); return; }
+
+            const result = sbSignup(fullName, email, mobile, password, confirmPassword);
+            if (result.ok) {
+                showToast(result.msg, "success");
+                setTimeout(() => (window.location.href = "login.html"), 900);
+            } else {
+                showToast(result.msg, "error");
+            }
+        });
+
+        // Digits-only mobile input
+        document.getElementById("suMobile").addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+        });
+    </script>
+</body>
+
+</html>

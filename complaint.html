@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report an Issue — Smart Bharat</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= NAVBAR ============================= -->
+    <nav class="navbar navbar-expand-lg sb-navbar">
+        <div class="container-fluid px-3 px-lg-5">
+            <a class="sb-brand" href="index.html"><span class="chakra-dot"></span>Smart Bharat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMain">
+                <ul class="navbar-nav ms-lg-4 me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link" data-page="index.html" data-i18n="nav_home"
+                            href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="services.html" data-i18n="nav_services"
+                            href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="chat.html" data-i18n="nav_chat"
+                            href="chat.html">AI Assistant</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="complaint.html" data-i18n="nav_complaint"
+                            href="complaint.html">Report Issue</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="tracker.html" data-i18n="nav_tracker"
+                            href="tracker.html">Track Complaint</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page="documents.html" data-i18n="nav_documents"
+                            href="documents.html">Documents</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                    <div class="btn-group" role="group" aria-label="Language switcher">
+                        <button class="btn-lang" data-lang="en">EN</button>
+                        <button class="btn-lang" data-lang="hi">हिं</button>
+                        <button class="btn-lang" data-lang="ta">தமிழ்</button>
+                    </div>
+                    <span id="navAuthSlot"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" style="padding:64px 0 48px;">
+        <div class="container content">
+            <span class="eyebrow">Civic Reporting</span>
+            <h1 class="mt-2" style="font-size:clamp(1.9rem,3.6vw,2.8rem);" data-i18n="complaint_title">Report a Civic
+                Issue</h1>
+            <p class="lead" data-i18n="complaint_sub">Tell us what's wrong and where. We'll route it to the right
+                department and give you a Complaint ID to track.</p>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-7">
+                    <div class="card-sb">
+                        <form id="complaintForm" class="form-sb" novalidate>
+                            <div class="mb-3">
+                                <label>Category *</label>
+                                <select class="form-select form-select-sb" id="cCategory" required>
+                                    <option value="" selected disabled>Select an issue category</option>
+                                    <option>Road & Potholes</option>
+                                    <option>Water Supply</option>
+                                    <option>Electricity</option>
+                                    <option>Garbage & Sanitation</option>
+                                    <option>Street Lighting</option>
+                                    <option>Public Nuisance</option>
+                                    <option>Corruption / Bribery</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Location *</label>
+                                <input type="text" class="form-control form-control-sb" id="cLocation"
+                                    placeholder="e.g. Anna Nagar 4th Street, Coimbatore" required>
+                            </div>
+                            <div class="mb-3">
+                                <label>Description *</label>
+                                <textarea class="form-control form-control-sb" id="cDescription" rows="4"
+                                    placeholder="Describe the issue in detail…" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label>Upload Photo (optional)</label>
+                                <input type="file" class="form-control form-control-sb" id="cImage" accept="image/*">
+                                <img id="cImagePreview" class="mt-2 rounded-3 d-none"
+                                    style="max-height:180px; border:1px solid var(--line);">
+                            </div>
+                            <button type="submit" class="btn btn-cta w-100" id="submitComplaintBtn">
+                                <span id="submitBtnText">Submit Complaint</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-sb mb-4">
+                        <div class="card-icon">💡</div>
+                        <h5>Tips for a faster response</h5>
+                        <ul class="muted mb-0" style="padding-left:18px;">
+                            <li>Be specific about the exact location (landmark helps).</li>
+                            <li>Add a clear photo if possible.</li>
+                            <li>One issue per complaint gets resolved faster.</li>
+                            <li>Save your Complaint ID to track progress.</li>
+                        </ul>
+                    </div>
+                    <div class="card-sb">
+                        <div class="card-icon">🔍</div>
+                        <h5>Already filed a complaint?</h5>
+                        <p class="muted">Track its status anytime using your Complaint ID.</p>
+                        <a href="tracker.html" class="btn btn-outline-secondary w-100">Go to Complaint Tracker</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4" style="border-radius:20px; border:none;">
+                <div style="font-size:3rem;">✅</div>
+                <h4 class="fw-bold mt-2">Complaint Submitted!</h4>
+                <p class="text-muted">Your complaint has been recorded. Use this ID to track its status:</p>
+                <div class="p-3 bg-paper-dim rounded-3 fw-bold fs-5" id="newComplaintId" style="letter-spacing:1px;">
+                    SB-2026-0000</div>
+                <div class="d-flex gap-2 mt-4">
+                    <button class="btn btn-outline-secondary w-100" data-bs-dismiss="modal">Close</button>
+                    <a href="tracker.html" class="btn btn-cta w-100">Track Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="sb-footer">
+        <div class="container">
+            <div class="foot-bottom" style="border-top:none; margin-top:0;">
+                <span>© 2026 Smart Bharat. Built for DEVENGERS PromptWars Hackathon.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        let uploadedImageDataUrl = null;
+
+        document.getElementById("cImage").addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            const preview = document.getElementById("cImagePreview");
+            if (!file) { uploadedImageDataUrl = null; preview.classList.add("d-none"); return; }
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                uploadedImageDataUrl = ev.target.result;
+                preview.src = uploadedImageDataUrl;
+                preview.classList.remove("d-none");
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById("complaintForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const category = document.getElementById("cCategory").value;
+            const location = document.getElementById("cLocation").value.trim();
+            const description = document.getElementById("cDescription").value.trim();
+
+            if (!category || !location || !description) {
+                showToast("Please fill in all required fields.", "error");
+                return;
+            }
+
+            const btn = document.getElementById("submitComplaintBtn");
+            const btnText = document.getElementById("submitBtnText");
+            btn.disabled = true;
+            btnText.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Submitting…`;
+
+            setTimeout(() => {
+                const record = submitComplaint({ category, location, description, imageDataUrl: uploadedImageDataUrl });
+                document.getElementById("newComplaintId").textContent = record.id;
+                new bootstrap.Modal(document.getElementById("successModal")).show();
+                document.getElementById("complaintForm").reset();
+                document.getElementById("cImagePreview").classList.add("d-none");
+                uploadedImageDataUrl = null;
+                btn.disabled = false;
+                btnText.textContent = "Submit Complaint";
+            }, 900); // simulated network delay for realistic UX
+        });
+    </script>
+</body>
+
+</html>
